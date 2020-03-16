@@ -1,4 +1,4 @@
-{{ define "email_alerta" }}
+{{ define "email_alert" }}
 
 <!--
 Style and HTML derived from https://github.com/mailgun/transactional-email-templates
