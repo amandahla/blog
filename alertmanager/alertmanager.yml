@@ -1,0 +1,23 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'mysmtpserver:25'
+  smtp_from: 'alertmanager@myalertmanager.com'
+  smtp_require_tls: false
+
+route:
+  group_by: ['url', 'alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 3h
+  receiver: 'sysadmin-team'
+
+receivers:
+- name: 'sysadmin-team'
+  email_configs:
+    - to: 'sysadmin@mycompany.com'
+      headers:
+        Subject: 'Alert - {{ .CommonLabels.url }}'
+      html: '{{ template "email_alert" .}}'
+
+templates:
+- '/opt/programas/alertmanager/0.20.0/inst01/templates/emails.tpl'

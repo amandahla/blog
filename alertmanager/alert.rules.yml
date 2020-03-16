@@ -1,0 +1,17 @@
+groups:
+- name: alert.rules
+  rules:
+  - alert: TargetFailed
+    expr: probe_success == 0
+    for: 3m
+    labels:
+      severity: 0
+      environment: "{{ $labels.environment }}"
+      url: "{{ $labels.instance }}"
+    annotations:
+      summary: "{{ $labels.environment }} - failed to access URL {{ $labels.instance }}"
+
+Example:
+- targets: ['http://www.my-server.com']
+  labels:
+    environment: Production
